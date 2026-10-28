@@ -1,0 +1,57 @@
+---
+layout: runbook
+title: '#4471 is three problems'
+owner: Erik Farmer
+status: open
+reviewed: 2026-10-28
+signature: Erik Farmer
+---
+
+<script>
+  import SplitTable from '#lib/kb/SplitTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+
+  const repo = 'https://github.com/erik-farmer/mega-s01e03/issues';
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day move': `${repo}/3` };
+</script>
+
+[#4471](/kb/incidents/4471) says one issue, one fix queued. Read by tenant, form and body, its
+reports show three problems. The queued parser fix closes only the first.
+
+<Callout kind="warn">
+Not one issue. Fixing the parser leaves the booking-v3 form hint and the one-day moves open.
+</Callout>
+
+## What #4471 holds
+
+<SplitTable ticket={4471} {issues} />
+
+## The three problems
+
+**`parser`: the shared parser reads every date month first.** Every tenant on file writes the
+day first, so a date like 4/7 becomes 7 April instead of 4 July. Most of #4471 is this.
+
+**`hint`: booking-v3's form prints `MM/DD/YYYY` under its date field.** People at day-first
+tenants type month first, as told, and the form reads the date the tenant's way. This happens
+only through the form, and only at booking-v3 tenants. Fixing the parser does not fix it: the hint
+is wrong.
+
+**`one-day move`: the date moves by one day, not swapped.** The desk noted these in
+`desk-notes.json` and then filed them under the parser by tenant. They say "one day off", "the
+invite arrived before I made the booking", and "Lisbon got Tuesday, Toronto got Monday". A month
+and day swap cannot do that. It looks like a timezone conversion.
+
+## How they were counted
+
+- Reports are unique by id. The ticket export repeats some reports across overlapping pages.
+- The cause comes from the tenant (`causes.ts`): its locale and its booking form. `intakeTag` is
+  intake's guess from the reporter's browser, and it disagrees with the tenant in both directions.
+- The reports in `desk-notes.json` are moved out of the cause their tenant puts them in.
+
+## Lessons
+
+- A matching subject line does not mean the same cause. Read the tenant, the channel and the body.
+- A note that says "read differently" is a finding. Give it its own ticket.
+
+<RenderStamp {signature} />
