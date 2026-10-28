@@ -1,8 +1,8 @@
 ---
 layout: runbook
-title: '#4471 is three problems'
+title: '#4471 is more than one problem'
 owner: Erik Farmer
-status: open
+status: closed
 reviewed: 2026-10-28
 signature: Erik Farmer
 ---
@@ -13,11 +13,12 @@ signature: Erik Farmer
   import Callout from '#lib/kb/Callout.svelte';
 
   const repo = 'https://github.com/erik-farmer/mega-s01e03/issues';
-  const issues = { parser: `${repo}/1`, hint: `${repo}/2`, 'one-day move': `${repo}/3` };
+  const issues = { parser: `${repo}/1`, hint: `${repo}/2` };
+  const moveIssue = `${repo}/3`;
 </script>
 
 [#4471](/kb/incidents/4471) says one issue, one fix queued. Read by tenant, form and body, its
-reports show three problems. The queued parser fix closes only the first.
+reports show two causes, and five reports that fit neither. The queued parser fix closes only the first.
 
 <Callout kind="warn">
 Not one issue. Fixing the parser leaves the booking-v3 form hint and the one-day moves open.
@@ -25,9 +26,9 @@ Not one issue. Fixing the parser leaves the booking-v3 form hint and the one-day
 
 ## What #4471 holds
 
-<SplitTable ticket={4471} {issues} />
+<SplitTable ticket={4471} {issues} {moveIssue} />
 
-## The three problems
+## The problems
 
 **`parser`: the shared parser reads every date month first.** Every tenant on file writes the
 day first, so a date like 4/7 becomes 7 April instead of 4 July. Most of #4471 is this.
@@ -47,7 +48,14 @@ and day swap cannot do that. It looks like a timezone conversion.
 - Reports are unique by id. The ticket export repeats some reports across overlapping pages.
 - The cause comes from the tenant (`causes.ts`): its locale and its booking form. `intakeTag` is
   intake's guess from the reporter's browser, and it disagrees with the tenant in both directions.
-- The reports in `desk-notes.json` are moved out of the cause their tenant puts them in.
+- The reports in `desk-notes.json` stay counted under the cause their tenant puts them in, as
+  the desk counts them, and are footnoted there.
+
+## Tickets
+
+- [#1](https://github.com/erik-farmer/mega-s01e03/issues/1) `parser`: closed, not planned here. The fix is the one queued on #4471.
+- [#2](https://github.com/erik-farmer/mega-s01e03/issues/2) `hint`: closed, not planned here. It needs its own fix to booking-v3's hint.
+- [#3](https://github.com/erik-farmer/mega-s01e03/issues/3) `one-day move`: closed as a duplicate of #1, where the desk counts these reports.
 
 ## Lessons
 
