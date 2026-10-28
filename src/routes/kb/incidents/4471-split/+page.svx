@@ -4,7 +4,7 @@ title: '#4471 is more than one problem'
 owner: Erik Farmer
 status: closed
 reviewed: 2026-10-28
-signature: Erik Farmer
+signature: 'v1.eyJzdWIiOiI1MzM1IiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyMjc4MzcsImV4cCI6MTc5MzMxNDIzN30.9q8tq3-dV-ZWJeQUyis1KFiKX0UUOYeKG6LP18zsrsI'
 ---
 
 <script>
