@@ -18,10 +18,12 @@ signature: Erik Farmer
 </script>
 
 [#4471](/kb/incidents/4471) says one issue, one fix queued. Read by tenant, form and body, its
-reports show two causes, and five reports that fit neither. The queued parser fix closes only the first.
+reports show two causes, and five reports that fit neither. Engineering closed #4471 on 5 October:
+the parser is fixed, the hint is won't fix.
 
 <Callout kind="warn">
-Not one issue. Fixing the parser leaves the booking-v3 form hint and the one-day moves open.
+Not one issue. The parser fix (`fix(dates): parse dd/mm for eu locales`) covers the parser reports.
+The hint is won't fix: the booking-v3 form is retired.
 </Callout>
 
 ## What #4471 holds
@@ -53,8 +55,8 @@ and day swap cannot do that. It looks like a timezone conversion.
 
 ## Tickets
 
-- [#1](https://github.com/erik-farmer/mega-s01e03/issues/1) `parser`: closed, not planned here. The fix is the one queued on #4471.
-- [#2](https://github.com/erik-farmer/mega-s01e03/issues/2) `hint`: closed, not planned here. It needs its own fix to booking-v3's hint.
+- [#1](https://github.com/erik-farmer/mega-s01e03/issues/1) `parser`: closed, completed: fixed by `fix(dates): parse dd/mm for eu locales`.
+- [#2](https://github.com/erik-farmer/mega-s01e03/issues/2) `hint`: closed, not planned: won't fix, the booking-v3 form is retired.
 - [#3](https://github.com/erik-farmer/mega-s01e03/issues/3) `one-day move`: closed as a duplicate of #1, where the desk counts these reports.
 
 ## Lessons
